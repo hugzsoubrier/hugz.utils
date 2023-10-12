@@ -11,6 +11,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     dplyr,
-    rlang
+    fs,
+    lubridate,
+    rlang,
+    scales,
+    stringr
 URL: https://github.com/hugzsoubrier/hugz.utils
 BugReports: https://github.com/hugzsoubrier/hugz.utils/issues

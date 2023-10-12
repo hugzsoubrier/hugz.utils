@@ -11,7 +11,7 @@ get_id_vec(df, ..., id_var = "pid")
 
 \item{...}{a condition to filter a dataframe.}
 
-\item{id_var}{specifiy id variable. default = pid.}
+\item{id_var}{specifiy id variable, default = pid.}
 }
 \value{
 a character vector of unique id_var after filtering for condition.
@@ -21,10 +21,7 @@ get a vector of id from df given condition.
 }
 \examples{
 
-dat <- data.frame(
-"pid" = c("xx-1", "xx-2", "xx-3"),
-"age" = c(12, 20, 39)
-)
+dat <- data.frame( "pid" = c("xx-1", "xx-2", "xx-3"), "age" = c(12, 20, 39) )
 
 get_id_vec(dat, age < 30)
 }
