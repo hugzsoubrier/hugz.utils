@@ -18,17 +18,20 @@
 # ---------------------------
 
 #get a vector of id by passing a df and a condition
-get_id_vec <- function(df, ..., id_var = pid ){
+get_id_vec <- function(df, ..., id_var = "pid" ){
+
+  id_var <- rlang::sym(id_var)
 
   if(missing(...)){
 
     message(paste0("returning all unique ",  substitute(id_var) , " of ", deparse(substitute(df)) ))
 
-    id <- unique(pull( df %>% drop_na({{id_var}}), {{id_var}} ))
+    id <- unique(dplyr::pull( dplyr::filter(df, !is.na(!!id_var)), !!id_var ))
 
   } else {
 
-    id <-  unique(df %>%  drop_na({{id_var}}) %>% filter(... ) %>% pull({{id_var}}))
+    fil_df <- dplyr::filter(df, !is.na(!!id_var), ... )
+    id <-  unique(dplyr::pull(fil_df, !!id_var))
   }
 
   return(id)
