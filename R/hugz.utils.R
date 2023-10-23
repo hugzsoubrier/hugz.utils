@@ -35,7 +35,7 @@ get_msf_onedrive <- function(project = NULL, path = NULL ) {
 
 #' Inline format of counts with proportion.
 #'
-#' @param x a dataframe object.
+#' @param x a data frame object.
 #' @param ... a condition for filtering x.
 #'
 #' @return inline counts and proportions for condition.
@@ -51,12 +51,11 @@ fmt_count_prop <- function (x, ...) {
   sprintf("%d (%s)", f$n, scales::percent(prop, accuracy = 0.1))
 }
 
-
 #' Format counts using K and M symbols.
 #'
 #' @param n a numeric vector.
 #'
-#' @return
+#' @return formatted values using M for millions and K for thousands
 #' @export
 #'
 #' @examples
@@ -77,13 +76,12 @@ fmt_n <- function(n) {
       accuracy = .1,
       scale_cut = c(0, K = 1e3, M = 1e6))
 
-      return( stringr::str_remove(out, "\\.0"))
+    return( stringr::str_remove(out, "\\.0"))
   }
 }
 #fmt_n <- Vectorize(fmt_n)
 
 # Epi functions -----------------------------------------------------------
-
 
 #' Time Interval between two dates.
 #'
@@ -118,11 +116,11 @@ get_epiweek <- function(x) {
   paste0(year, "-S",week)
 }
 
-#' get a vector of id from df given condition.
+#' get a vector of id from a df given condition.
 #'
-#' @param df a dataframe.
+#' @param df a data frame.
 #' @param ... a condition to filter a dataframe.
-#' @param id_var specifiy id variable, default = pid.
+#' @param id_var specify id variable, default = pid.
 #'
 #' @return a character vector of unique id_var after filtering for condition.
 #' @export
@@ -149,3 +147,57 @@ get_id_vec <- function(df, ..., id_var = "pid" ){
   }
   return(id)
 }
+
+
+# Write flags -------------------------------------------------------------
+
+#' Title
+#'
+#' @param df a df to save to .xlsx
+#' @param df_name a name for the main sheet
+#' @param extra_sheet a df to be added as a second sheet
+#' @param extra_sheet_name a name for the second sheet
+#' @param file_path path to save the file
+#' @param file_name file name using .xlsx
+#'ss
+#' @return
+#' @export
+#'
+#' @examples
+write_multi_xlsx <- function(
+    df,
+    df_name,
+    extra_sheet,
+    extra_sheet_name,
+    file_path,
+    file_name) {
+
+  if(!grepl(".xlsx", file_name)) {stop("Only provide a .xlsx filename")}
+
+  if(nrow(df)){
+
+    xlsx <- openxlsx::createWorkbook()
+
+    openxlsx::addWorksheet(xlsx, sheetName = df_name)
+    openxlsx::writeData(xlsx, sheet = df_name, df)
+
+    if(!missing(extra_sheet)){
+      openxlsx::addWorksheet(xlsx, sheetName = extra_sheet_name)
+      openxlsx::writeData(xlsx, sheet = extra_sheet_name, extra_sheet)
+    }
+    #save the workbook
+    openxlsx::saveWorkbook(xlsx, fs::path(file_path, file_name), overwrite = TRUE )
+
+    message(nrow(df), " records written in ", file_name)
+
+  } else {
+
+    message(" No records written in ", file_name)
+
+  }
+
+}
+
+
+
+

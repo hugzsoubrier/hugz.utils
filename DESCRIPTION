@@ -13,6 +13,7 @@ Imports:
     dplyr,
     fs,
     lubridate,
+    openxlsx,
     rlang,
     scales,
     stringr
