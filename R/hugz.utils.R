@@ -200,4 +200,35 @@ write_multi_xlsx <- function(
 
 
 
+# pull_unique() -----------------------------------------------------------
 
+# pulls unique values of a vector
+
+pull_unique <- function(dat, x){
+
+  values <- dat %>%
+    distinct({{x}}) %>%
+
+    pull({{x}})
+
+  return(values)
+
+}
+
+# Ggplot theme ------------------------------------------------------------
+
+my_theme <- function(base_size = 10) {
+
+  hrbrthemes::theme_ipsum(base_size = base_size,
+                          strip_text_size = 6,
+                          axis_title_size = 10,
+                          plot_margin = ggplot2::margin(10, 10, 10, 10),
+                          plot_title_size = 10,
+                          subtitle_size = 9,
+                          subtitle_face = "italic",
+                          axis_text_size = 10
+  )
+
+}
+
+my_theme()
