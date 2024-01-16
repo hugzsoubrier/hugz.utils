@@ -217,9 +217,7 @@ pull_unique <- function(dat, x){
 
 # Ggplot theme ------------------------------------------------------------
 
-my_theme <- function(base_size = 10) {
-
-  hrbrthemes::theme_ipsum(base_size = base_size,
+my_theme <- hrbrthemes::theme_ipsum(base_size = 10,
                           strip_text_size = 6,
                           axis_title_size = 10,
                           plot_margin = ggplot2::margin(10, 10, 10, 10),
@@ -228,7 +226,3 @@ my_theme <- function(base_size = 10) {
                           subtitle_face = "italic",
                           axis_text_size = 10
   )
-
-}
-
-my_theme()
